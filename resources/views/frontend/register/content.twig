@@ -5,10 +5,10 @@
 	<div class="row">
 		<div class="col-md-6-md-offset-3">
 			<div class="panel panel-info">
-				<div class="panel-heading">Sign In</div>
+				<div class="panel-heading">Sign Up</div>
 				<div class="panel-body">
 
-					<form action="{{ path_for('auth.signin') }}" method="post">
+					<form action="" method="post">
 						<div class="form-group {{ errors.email ? 'has-error' : '' }}">
 							<label for="email">Email</label>
 							<input type="email" name="email" class="form-control" placeholder="you@domain.com" value="{{  old.email }}">
@@ -24,7 +24,7 @@
 								<span class="help-block">{{ errors.password | first }}</span>
 							{% endif %}
 						</div>
-						<button class="btn btn-info" type="submit">Sign In</button>
+						<button class="btn btn-info" type="submit">Register</button>
 
 						{{ csrf.field | raw }}
 					</form>

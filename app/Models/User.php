@@ -9,17 +9,41 @@ class User extends Model {
 	protected $table = 'users';
 
 	protected $fillable = [
-		'user_name',
-		'user_email',
-		'user_password',
+		'email',
+		'password',
 	];
 
 	public function setpassword($password, $user_id) {
 
-		$this->where('user_id', $user_id)->update([
-			'user_password' => password_hash($password, PASSWORD_DEFAULT)
+		$this->where('id', $user_id)->update([
+			'password' => password_hash($password, PASSWORD_DEFAULT)
 		]);
 		
 	}
+
+	public function getById($user_id) {
+	
+		return $this->where('id', $user_id)->first();
+		
+	} 
+
+	public function getByEmail($email) {
+	
+		$result = $this->where('email', $email)->first();
+
+		if (!$result) return false;
+
+		return $result;
+		
+	} 
+
+	public function newUser($email, $password) {
+	
+		return $this->create([
+			'email' => $email,
+			'password' => password_hash($password, PASSWORD_DEFAULT),
+		]);
+		
+	} 
 
 }

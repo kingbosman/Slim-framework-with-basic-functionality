@@ -3,23 +3,32 @@
 use App\Middleware\AuthMiddleware;
 use App\Middleware\GuestMiddleware;
 
-$app->get('/', 'HomeController:index')->setName('home');
+/* Routes for all */
+$app->get('/', 'HomeController:main')->setName('home');
 
+/* Guest only routes */
 $app->group('', function () {
 
-	$this->get('/auth/signup', 'AuthController:getSignUp')->setName('auth.signup');
-	$this->post('/auth/signup', 'AuthController:postSignUp');
+	/* Login */
+	$this->get('/login', 'LoginController:main')->setName('login');
+	$this->post('/login', 'LoginController:login');
 
-	$this->get('/auth/signin', 'AuthController:getSignIn')->setName('auth.signin');
-	$this->post('/auth/signin', 'AuthController:postSignIn');
+	/* Register */
+	$this->get('/register', 'RegisterController:main')->setName('register');
+	$this->post('/register', 'RegisterController:register');
 
 })->add(new GuestMiddleware($container));
 
+/* Admin routes */
 $app->group('', function () {
 
-	$this->get('/auth/signout', 'AuthController:getSignOut')->setName('auth.signout');
+	/* Logout */
+	$this->get('/logout', function ($request, $response) {
 
-	$this->get('/auth/password/change', 'PasswordController:getChangePassword')->setName('auth.password.change');
-	$this->post('/auth/password/change', 'PasswordController:postChangePassword');
+	    $this->auth->logout();
+	    $this->flash->addMessage('info', 'You have been logged out');
+		return $response->withRedirect($this->router->pathFor('home'));
+
+	})->setName('admin.logout');
 
 })->add(new AuthMiddleware($container));

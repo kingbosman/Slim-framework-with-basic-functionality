@@ -1,23 +1,31 @@
 {% if flash.getMessage('info') %}
-	<div class="alert alert-info">
-		{{ flash.getMessage('info') | first }}
-	</div>
+	<script>
+		$( document ).ready(function()  {
+			notie.alert('info', "{{ flash.getMessage('info') | first }}", 3);
+		});
+	</script>
 {% endif %}
 
 {% if flash.getMessage('danger') %}
-	<div class="alert alert-danger">
-		{{ flash.getMessage('danger') | first }}
-	</div>
+	<script>
+		$( document ).ready(function()  {
+			notie.alert('danger', "{{ flash.getMessage('danger') | first }}", 3);
+		});
+	</script>
 {% endif %}
 
 {% if flash.getMessage('success') %}
-	<div class="alert alert-success">
-		{{ flash.getMessage('success') | first }}
-	</div>
+	<script>
+		$( document ).ready(function()  {
+			notie.alert('success', "{{ flash.getMessage('success') | first }}", 3);
+		});
+	</script>
 {% endif %}
 
 {% if flash.getMessage('warning') %}
-	<div class="alert alert-warning">
-		{{ flash.getMessage('warning') | first }}
-	</div>
+	<script>
+		$( document ).ready(function()  {
+			notie.alert('warning', "{{ flash.getMessage('warning') | first }}", 3);
+		});
+	</script>
 {% endif %}

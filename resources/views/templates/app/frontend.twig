@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+
+	{# Bootstrap #}
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	{# Bootstrap #}
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+	{# Custom #}
+	<link rel="stylesheet" href="{{ base_url() }}/assets/css/app.css">
+
+	{# Notie #}
+	<link rel="stylesheet" href="{{ base_url() }}/assets/css/notie.css">
+
+	{# Jquery #}
+	<script src="{{ base_url() }}/assets/js/jquery.min.js"></script>
+
+	<script src="{{ base_url() }}/assets/js/app.js"></script>
+
+</head>
+<body>
+	{% include 'templates/partials/navigation.twig' %}
+
+	{% include 'templates/partials/flash.twig'  %}
+	{% block content %}{% endblock %}
+	
+	{# jquery #}
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.js"></script>
+
+	{# Bootstrap #}
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+	{# Notie #}
+	<script src="{{ base_url() }}/assets/js/notie.min.js"></script>
+</body>
+</html>

@@ -22,4 +22,10 @@ class Controller {
 	
 	}
 
+	public function renderView($response, $page, $args = []) {
+	
+		return $this->view->render($response, $page . '.twig', $args);
+		
+	} 
+
 }

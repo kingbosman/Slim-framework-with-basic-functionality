@@ -6,6 +6,7 @@ session_start();
 
 require __DIR__ . '/../vendor/autoload.php';
 
+/* DB settings in config */
 $app = new \Slim\App([
 
 	'settings' => [
@@ -15,10 +16,10 @@ $app = new \Slim\App([
 	],
 	'db' => [
 		'driver' => 'mysql',
-		'host' => '127.0.0.1',
-		'database' => 'slim',
-		'username' => 'root',
-		'password' => 'root',
+		'host' => 'xxx',
+		'database' => 'xxx',
+		'username' => 'xxx',
+		'password' => 'xxx',
 		'charset' => 'utf8',
 		'collation' => 'utf8_unicode_ci',
 		'prefix' => '',
@@ -26,6 +27,7 @@ $app = new \Slim\App([
 
 ]);
 
+/* Set containers */
 $container = $app->getContainer();
 
 $capsule = new \Illuminate\Database\Capsule\Manager;
@@ -41,7 +43,13 @@ $container['db'] = function ($container) use ($capsule) {
 
 $container['auth'] = function ($container) {
 
-	return new \App\Auth\Auth;
+	return new App\Auth\User;
+
+};
+
+$container['page'] = function ($container) {
+
+	return new App\Models\Page;
 
 };
 
@@ -66,11 +74,11 @@ $container['view'] = function ($container) {
 
 	));
 
-	$view->getEnvironment()->addGlobal('auth', [
+	$view->getEnvironment()->addGlobal('user', [
 		'check' => $container->auth->check(),
-		'user' => $container->auth->user(),
 	]);
 
+	/* Add global for future use */
 	$view->getEnvironment()->addGlobal('flash', $container->flash);
 
 	return $view;
@@ -83,30 +91,33 @@ $container['validator'] = function ($container) {
 
 };
 
-$container['HomeController'] = function($container) { 
-
-	return new \App\Controllers\HomeController($container);
-
-};
-
-$container['AuthController'] = function($container) { 
-
-	return new \App\Controllers\auth\AuthController($container);
-
-};
-
-$container['PasswordController'] = function($container) { 
-
-	return new \App\Controllers\auth\PasswordController($container);
-
-};
-
 $container['csrf'] = function ($container) {
 
 	return new \Slim\Csrf\Guard;
 
 };
 
+
+
+/* find all controllers in page table */
+foreach ($container['page']->getActive() as $page) {
+
+	$name = ucfirst($page['name']) . 'Controller';
+	$type = $page['type'];
+
+	$container[$name] = function($container) use ($name, $type) { 
+
+		$path = '\\App\Controllers\\' . $type . '\\';
+
+		$path = $path . $name;
+
+		return new $path($container);
+
+	};
+
+}
+
+/* Add middleware */
 $app->add(new \App\Middleware\ValidationErrorMiddleware($container));
 $app->add(new \App\Middleware\OldInputMiddleware($container));
 $app->add(new \App\Middleware\CsrfViewMiddleware($container));
