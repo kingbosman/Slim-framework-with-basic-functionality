@@ -2,6 +2,8 @@
 
 Use Respect\Validation\Validator as v;
 
+die('Please go to bootstrap/app.php and set db + comment this die() line.');
+
 session_start();
 
 require __DIR__ . '/../vendor/autoload.php';
